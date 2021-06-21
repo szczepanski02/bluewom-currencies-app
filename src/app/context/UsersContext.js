@@ -7,8 +7,6 @@ export const defaultObject = {
     username: '',
     setUsername: () => {},
 
-    favoriteCurrencies: [],
-    setFavoriteCurrencies: () => {}
 }
 
 export const UsersContext = createContext(defaultObject);

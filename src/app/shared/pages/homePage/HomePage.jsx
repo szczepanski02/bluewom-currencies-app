@@ -10,7 +10,6 @@ import { useTheme } from '@material-ui/core/styles';
 import './HomePage.scss';
 
 import CurrenciesList from '../../components/CurrenciesList';
-import AddFavoriteCurrency from '../../components/AddFavoriteCurrency';
 import MainChart from '../../components/MainChart';
 
 const HomePage = () => {
@@ -24,15 +23,13 @@ const HomePage = () => {
         }
     }
 
-    const { username, favoriteCurrencies, setFavoriteCurrencies } = useContext(UsersContext);
+    const { username } = useContext(UsersContext);
     const [ userExist, setUserExist ] = useState(false);
-    console.log(favoriteCurrencies);
 
     const setNewUser = (id) => {
 
         const newUserObject = {
-            name: username,
-            favoriteCurrencies
+            name: username
         }
         db.ref(`users/${id}`).set(newUserObject);
         setUserExist(true);
@@ -43,12 +40,8 @@ const HomePage = () => {
             const data = snapshot.val();
             if(data.length > 0) {
                 const findItem = data.map(e => e.name).indexOf(username);
-
-                if(findItem >=0) {
-                    const userItem = data[findItem];
-                    setFavoriteCurrencies(userItem.favoriteCurrencies);
+                if(findItem >= 0) {
                     setUserExist(true);
-
                 } else {
                     setNewUser(data.length);
                 }
@@ -71,7 +64,6 @@ const HomePage = () => {
                         </Grid>
 
                         <Grid item md={6} xs={12}>
-                            <AddFavoriteCurrency />
                             <MainChart />
                         </Grid>
                     </Grid>

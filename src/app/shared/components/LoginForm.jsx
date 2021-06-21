@@ -33,7 +33,7 @@ const LoginForm = () => {
         <div>
             {isUserLogged ? <Redirect push to="/homePage" /> : 
                 <form onSubmit={handleSubmit}>
-                    <Stack spacing={3}>
+                    <Stack spacing={10}>
                         <FormControl>
                             <FormLabel>Username</FormLabel>
                             <Input type="text" name="username" placeholder="username"></Input>

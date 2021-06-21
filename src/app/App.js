@@ -14,11 +14,10 @@ const App = () => {
   const [isUserLogged, setIsUserLogged] = useState(defaultObject.isUserLogged);
   const toggleLoggedState = () => setIsUserLogged(!isUserLogged);
   const [username, setUsername] = useState(defaultObject.username);
-  const [favoriteCurrencies, setFavoriteCurrencies] = useState(defaultObject.favoriteCurrencies);
 
   return (
     <ThemeProvider theme={theme}>
-      <UsersContext.Provider value={{ isUserLogged, toggleLoggedState, username, setUsername, favoriteCurrencies, setFavoriteCurrencies }}>
+      <UsersContext.Provider value={{ isUserLogged, toggleLoggedState, username, setUsername }}>
         <Router>
           <Switch>
             <Route exact path="/">
