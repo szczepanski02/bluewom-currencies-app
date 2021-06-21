@@ -25,7 +25,7 @@ const AddFavoriteCurrency = () => {
     const [inputValue, setInputValue] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    const [favoriteCurrenciesList, setFavoriteCurrenciesList] = useState();
+    const [favoriteCurrenciesList, setFavoriteCurrenciesList] = useState([]);
     const [userIndex, setUserIndex] = useState(undefined);
     const [open, setOpen] = useState(false);
     const [exitingItemPos ,setExitingItemPos] = useState(undefined);
@@ -44,18 +44,30 @@ const AddFavoriteCurrency = () => {
 
     const addClickHandler = () => {
         if(inputValue.length === 3) {
-
-            const isExist = favoriteCurrenciesList.indexOf(inputValue);
-            if(isExist >= 0) {
-                setErrorMessage('You cant add this currency, becouse its exist on your list');
-                setSuccessMessage('');
-            } else {
+            if(favoriteCurrenciesList) {
+                const isExist = favoriteCurrenciesList.indexOf(inputValue);
+                if(isExist >= 0) {
+                    setErrorMessage('You cant add this currency, becouse its exist on your list');
+                    setSuccessMessage('');
+                } else {
+                    const newCurrency = inputValue.toUpperCase();
+                        db.ref(`users/${userIndex}`).set({
+                            name: username,
+                            favoriteCurrencies: [...favoriteCurrenciesList, newCurrency]
+                        });
+                    setErrorMessage('');
+                    setSuccessMessage('Currency has been added');
+                }
+            }
+            else {
                 const newCurrency = inputValue.toUpperCase();
-                db.ref(`users/${userIndex}/favoriteCurrencies`).set([...favoriteCurrenciesList, newCurrency]);
+                db.ref(`users/${userIndex}`).set({
+                    name: username,
+                    favoriteCurrencies: [newCurrency]
+                });
                 setErrorMessage('');
                 setSuccessMessage('Currency has been added');
             }
-
         } else {
             setErrorMessage('Type a correct currency code!');
             setSuccessMessage('');
